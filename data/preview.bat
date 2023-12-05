@@ -1,0 +1,1 @@
+"%~dp0\..\viewers\bin\SIBR_remoteGaussian_app.exe"
