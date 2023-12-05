@@ -23,6 +23,7 @@ parser.add_argument("--camera", default="OPENCV", type=str)
 parser.add_argument("--colmap_executable", default="", type=str)
 parser.add_argument("--resize", action="store_true")
 parser.add_argument("--magick_executable", default="", type=str)
+parser.add_argument("--mask", default="", type=str)
 args = parser.parse_args()
 colmap_command = '"{}"'.format(args.colmap_executable) if len(args.colmap_executable) > 0 else "colmap"
 magick_command = '"{}"'.format(args.magick_executable) if len(args.magick_executable) > 0 else "magick"
@@ -38,6 +39,8 @@ if not args.skip_matching:
         --ImageReader.single_camera 1 \
         --ImageReader.camera_model " + args.camera + " \
         --SiftExtraction.use_gpu " + str(use_gpu)
+    if len(args.mask) > 0:
+        feat_extracton_cmd += " --ImageReader.camera_mask_path " + args.mask
     exit_code = os.system(feat_extracton_cmd)
     if exit_code != 0:
         logging.error(f"Feature extraction failed with code {exit_code}. Exiting.")
